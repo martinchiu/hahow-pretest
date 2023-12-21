@@ -4,14 +4,11 @@ import { getHeroList, getSingleHero } from '../service/heroService.js'
 const router = Router()
 
 router.get('/', async function (req, res) {
-    const data = await getHeroList()
-    res.send({heroes: data})
+    await getHeroList(req, res)
 })
 
 router.get('/:id', async function (req, res) {
-    const {id} = req.params
-    const data = await getSingleHero(id)
-    res.send(data)
+    await getSingleHero(req, res)
 })
 
 export default router
