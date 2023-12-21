@@ -1,16 +1,12 @@
-const express = require('express');
+import express from 'express'
+import heroRoute from './route/hero.js'
 
-const app = express();
+const app = express()
 
-const port = 5001;
+const port = 5001
 
-app.get('/', (req, res) => {
-  res.send('hello world!')
-})
+app.use('/heroes', heroRoute)
 
-app.get('/bye', (req, res) => {
-  res.send('bye!')
-})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
