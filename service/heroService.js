@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {checkAPIReturn} from '../utils/util.js'
 
 const baseUrl = 'https://hahow-recruit.herokuapp.com/'
 
@@ -18,6 +19,7 @@ export async function getHeroList(req, res) {
     }
 
     const {data: heroes} = await axios(url)
+    checkAPIReturn(heroes)
 
     const requestArr = []
     if (isAuthenticated) {
@@ -50,14 +52,14 @@ export async function getSingleHero(req, res) {
         const result = await axios.post(authUrl, {name, password})
         if (result.status === 200) isAuthenticated = true
     } 
-    const requestArr = [axios(url)]
+    const {data: heroInfo} = await axios(url)
+    checkAPIReturn(heroInfo)
     if (isAuthenticated) {
         const profileUrl = `${url}/profile`
-        requestArr.push(axios(profileUrl))
-        const [hero, profile] = await Promise.all(requestArr)
-        return res.send({...hero.data, profile: profile.data}) 
-    } else {
-        const [hero] = await Promise.all(requestArr)
-        return res.send({...hero.data}) 
+        const {data: profile} = await axios(profileUrl)
+        checkAPIReturn(profile)
+        heroInfo.profile = profile
     }
+    
+    return res.send(heroInfo) 
 }

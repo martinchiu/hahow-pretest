@@ -13,3 +13,11 @@ export async function handleService(serviceFunction, req, res) {
         return res.send(errMsg)
     }
 }
+
+export function checkAPIReturn(data) {
+    if (data.code) {
+        const msg = data.message ? data.message : 'Database went wrong'
+        throw new Error(msg)
+    }
+    return
+}
