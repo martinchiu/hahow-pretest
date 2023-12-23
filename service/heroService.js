@@ -4,20 +4,9 @@ import {checkAPIReturn} from '../utils/util.js'
 const baseUrl = process.env.API_URL
 
 export async function getHeroList(req, res) {
+    const {isAuthenticated} = req
     const url = `${baseUrl}heroes/`
-    const {name, password} = req.headers
-    let isAuthenticated = false
-
-    if (name === '' || password === '') {
-        throw new Error('Name and Password cannot be empty')
-    }
-
-    if (name || password) {
-        const authUrl = `${baseUrl}auth`
-        const result = await axios.post(authUrl, {name, password})
-        if (result.status === 200) isAuthenticated = true
-    }
-
+    
     const {data: heroes} = await axios(url)
     checkAPIReturn(heroes)
 
@@ -38,20 +27,10 @@ export async function getHeroList(req, res) {
 }
 
 export async function getSingleHero(req, res) {
+    const {isAuthenticated} = req
     const {id} = req.params
-    const {name, password} = req.headers
-    let isAuthenticated = false
     const url = `${baseUrl}heroes/${id}`
 
-    if (name === '' || password === '') {
-        throw new Error('Name and Password cannot be empty')
-    }
-
-    if (name || password) {
-        const authUrl = `${baseUrl}auth`
-        const result = await axios.post(authUrl, {name, password})
-        if (result.status === 200) isAuthenticated = true
-    } 
     const {data: heroInfo} = await axios(url)
     checkAPIReturn(heroInfo)
     if (isAuthenticated) {

@@ -1,4 +1,6 @@
+import axios from 'axios'
 import { AxiosError } from "axios"
+const baseUrl = process.env.API_URL
 
 export async function handleService(serviceFunction, req, res) {
     try {
@@ -20,4 +22,27 @@ export function checkAPIReturn(data) {
         throw new Error(msg)
     }
     return
+}
+
+export async function authenticate(req, res, next) {
+    const {name, password} = req.headers
+    let isAuthenticated = false
+
+    if (name === '' || password === '') {
+        return res.send('Name and Password cannot be empty')
+    }
+
+    if (name || password) {
+        try {
+            const authUrl = `${baseUrl}auth`
+            const result = await axios.post(authUrl, {name, password})
+            if (result.status === 200) isAuthenticated = true
+        } catch (error) {
+            let errMsg = `${error.name}:${error.message}, origin url: ${error.config.url}`
+            return res.send(errMsg)
+        }
+    }
+
+    req.isAuthenticated = isAuthenticated
+    next()
 }
