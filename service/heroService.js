@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {checkAPIReturn} from '../utils/util.js'
 
-const baseUrl = 'https://hahow-recruit.herokuapp.com/'
+const baseUrl = process.env.API_URL
 
 export async function getHeroList(req, res) {
     const url = `${baseUrl}heroes/`
@@ -60,6 +60,6 @@ export async function getSingleHero(req, res) {
         checkAPIReturn(profile)
         heroInfo.profile = profile
     }
-    
+
     return res.send(heroInfo) 
 }
