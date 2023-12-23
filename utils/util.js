@@ -11,7 +11,10 @@ export async function handleService(serviceFunction, req, res) {
             errMsg = `${error.name}:${error.message}, origin url: ${error.config.url}`
         } else if (error instanceof Error) {
             errMsg = error.message
+        } else {
+            errMsg = error
         }
+
         return res.send(errMsg)
     }
 }
@@ -28,6 +31,7 @@ export async function authenticate(req, res, next) {
     const {name, password} = req.headers
     let isAuthenticated = false
 
+    // the boolean value of empty string is false, so set another if block to check 
     if (name === '' || password === '') {
         return res.send('Name and Password cannot be empty')
     }

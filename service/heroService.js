@@ -19,6 +19,7 @@ export async function getHeroList(req, res) {
     }
     const profiles = await Promise.allSettled(requestArr)
     profiles.forEach((profile, index) => {
+        // results from allSettled could be fulfilled or rejected
         if(profile.status === 'fulfilled') {
             heroes[index].profile = profile.value.data
         }
