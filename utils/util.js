@@ -6,8 +6,9 @@ export async function handleService(serviceFunction, req, res) {
     try {
         return await serviceFunction(req, res)
     } catch (error) {
-        let errMsg
+        let errMsg, status = 500
         if (error instanceof AxiosError) {
+            status = error.response.status
             errMsg = `${error.name}:${error.message}, origin url: ${error.config.url}`
         } else if (error instanceof Error) {
             errMsg = error.message
@@ -15,7 +16,7 @@ export async function handleService(serviceFunction, req, res) {
             errMsg = error
         }
 
-        return res.send(errMsg)
+        return res.status(status).send(errMsg)
     }
 }
 
@@ -33,7 +34,7 @@ export async function authenticate(req, res, next) {
 
     // the boolean value of empty string is false, so set another if block to check 
     if (name === '' || password === '') {
-        return res.send('Name and Password cannot be empty')
+        return res.status(401).send('Name and Password cannot be empty')
     }
 
     if (name || password) {
@@ -42,8 +43,9 @@ export async function authenticate(req, res, next) {
             const result = await axios.post(authUrl, {name, password})
             if (result.status === 200) isAuthenticated = true
         } catch (error) {
+            const status = error.response?.status ? error.response.status : 500
             let errMsg = `${error.name}:${error.message}, origin url: ${error.config.url}`
-            return res.send(errMsg)
+            return res.status(status).send(errMsg)
         }
     }
 
