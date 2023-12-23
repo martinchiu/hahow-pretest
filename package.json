@@ -9,6 +9,7 @@
     "url": "https://github.com/martinchiu/hahow-pretest.git"
   },
   "scripts": {
+    "start": "node app.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --setupFiles dotenv/config",
     "debug": "nodemon --inspect app.js"
   },
