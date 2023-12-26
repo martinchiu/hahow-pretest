@@ -3,8 +3,7 @@ import {checkAPIReturn} from '../utils/util.js'
 
 const baseUrl = process.env.API_URL
 
-export async function getHeroList(req, res) {
-    const {isAuthenticated} = req
+export async function getHeroList(isAuthenticated) {
     const url = `${baseUrl}heroes/`
     
     const {data: heroes} = await axios(url)
@@ -24,12 +23,10 @@ export async function getHeroList(req, res) {
             heroes[index].profile = profile.value.data
         }
     })
-    return res.send({heroes})
+    return heroes
 }
 
-export async function getSingleHero(req, res) {
-    const {isAuthenticated} = req
-    const {id} = req.params
+export async function getSingleHero(isAuthenticated, id) {
     const url = `${baseUrl}heroes/${id}`
 
     const {data: heroInfo} = await axios(url)
@@ -41,5 +38,5 @@ export async function getSingleHero(req, res) {
         heroInfo.profile = profile
     }
 
-    return res.send(heroInfo) 
+    return heroInfo
 }

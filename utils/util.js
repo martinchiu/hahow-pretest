@@ -1,24 +1,5 @@
 import axios from 'axios'
-import { AxiosError } from "axios"
 const baseUrl = process.env.API_URL
-
-export async function handleService(serviceFunction, req, res) {
-    try {
-        return await serviceFunction(req, res)
-    } catch (error) {
-        let errMsg, status = 500
-        if (error instanceof AxiosError) {
-            status = error.response.status
-            errMsg = `${error.name}:${error.message}, origin url: ${error.config.url}`
-        } else if (error instanceof Error) {
-            errMsg = error.message
-        } else {
-            errMsg = error
-        }
-
-        return res.status(status).send(errMsg)
-    }
-}
 
 export function checkAPIReturn(data) {
     if (data.code) {

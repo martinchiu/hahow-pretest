@@ -56,8 +56,9 @@ npm run test
 |----|:----:|----|
 |axios |基於`promise`模式發送網路請求|相比可接觸到更底層的`fetch`套件，`axios`使用上更方便且直觀，例：設置請求timeout，`axios`僅需在option添加key；`axios`收到status code非2XX的回應，會用reject的方式處理。[官方文件](https://axios-http.com/docs/intro)
 |dotenv |管理環境變數 |載入`.env`內的值設定為`process.env`底下的變數。[官方文件](https://www.npmjs.com/package/dotenv?activeTab=readme)
-|express |`Node.js` 最受歡迎的框架|輕量、易上手且提供豐富的HTTP工具，讓使用者可以快速建立後端Server。[官方文件](https://expressjs.com/)
-|jest |測試框架 |自備斷言庫且易上手的測試框架，近幾年的使用量更是力壓另外兩個框架(`ava`、`mocha`)。[官方文件](https://jestjs.io)
+|express |Node.js 最受歡迎的框架|輕量、易上手且提供豐富的HTTP工具，讓使用者可以快速建立後端Server。[官方文件](https://expressjs.com/)
+|express-async-handler |非同步程式的錯誤處理 |簡化非同步程式錯誤處理的middleware，省略在每段非同步程式寫`try catch`，將錯誤傳給`express`的error handler。[官方文件](https://www.npmjs.com/package/express-async-handler)
+|jest |測試框架 |自備斷言庫且易上手的測試框架，近幾年的使用量更是力壓另外兩個框架(ava、mocha)。[官方文件](https://jestjs.io)
 |nodemon |起服務的套件 |開發階段會頻繁地修改程式，使用`nodemon`可以在程式修改後更方便地重啟服務，但有個致命缺點是無法應用在分佈式架構，因此在分佈式架構下會選擇另一個套件：`pm2`。[官方文件](https://www.npmjs.com/package/nodemon)
 ## Comment
 寫註解有底下幾點原則：
